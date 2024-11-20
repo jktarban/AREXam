@@ -60,21 +60,16 @@ namespace Development.Core.Elements.TargetSelector
                 {
                     _currentTarget.ShowParticle(false);
                 }
+
                 _currentTarget = newTarget;
-                _currentTarget.ShowParticle(true);
-                OnTargetChanged(_currentTarget);
+
+                if (_currentTarget != null)
+                {
+                    _currentTarget.ShowParticle(true);
+                }
             }
 
             return _currentTarget;
-        }
-
-        private void OnTargetChanged(BaseEnemyComponent newTarget)
-        {
-            if (newTarget != null)
-            {
-                Debug.Log($"New target selected: {newTarget.name}");
-                // Add any logic to handle targeting (e.g., highlight enemy)
-            }
         }
     }
 }
