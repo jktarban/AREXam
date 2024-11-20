@@ -55,6 +55,11 @@ namespace Development.Core.Elements.Gun
 
         private void Fire(TargetType targetType, Transform target)
         {
+            if (target == null)
+            {
+                return;
+            }
+
             // Instantiate the bullet
             Vector3 firingDirection = (target.position - _mainCamera.transform.position).normalized;
             BulletComponent bullet = Object.Instantiate(ConfigData.BulletPrefab, _mainCamera.transform.position,
@@ -75,6 +80,11 @@ namespace Development.Core.Elements.Gun
 
             while (bullet != null && _target != null && timeElapsed < homingDuration)
             {
+                if (target == null)
+                {
+                    break;
+                }
+
                 // Calculate the new direction toward the target
                 Vector3 directionToTarget = (target.position - bullet.transform.position).normalized;
 

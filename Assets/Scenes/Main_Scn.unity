@@ -167,7 +167,7 @@ MonoBehaviour:
     settings: {fileID: 0}
   view:
     viewReferences:
-      camera: {fileID: 1094306254}
+      xrOrigin: {fileID: 744863974}
   events:
     onTargetSelected:
       eventItems:
@@ -515,7 +515,7 @@ MonoBehaviour:
     settings: {fileID: 0}
   view:
     viewReferences:
-      mainCamera: {fileID: 1094306254}
+      xrOrigin: {fileID: 744863974}
 --- !u!1 &912194723
 GameObject:
   m_ObjectHideFlags: 0

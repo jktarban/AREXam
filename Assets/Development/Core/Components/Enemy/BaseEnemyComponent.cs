@@ -18,6 +18,7 @@ namespace Development.Core.Components.Enemy
         [SerializeField] private Transform head;
         [SerializeField] private Transform feet;
         [SerializeField] private Transform heart;
+        [SerializeField] private ParticleSystem _particleSystem;
 
 
         private void Start()
@@ -25,11 +26,16 @@ namespace Development.Core.Components.Enemy
             OnStart();
         }
 
+        public void ShowParticle(bool isShow)
+        {
+            _particleSystem.gameObject.SetActive(isShow);
+        }
+
         public void Hit(TargetType targetType)
         {
             if (targetType == weakPoint)
             {
-                Debug.Log("HIT WEAKPOINT");
+                Destroy(gameObject);
             }
         }
 

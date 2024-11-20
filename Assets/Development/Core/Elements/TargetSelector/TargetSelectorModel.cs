@@ -56,7 +56,12 @@ namespace Development.Core.Elements.TargetSelector
             // Update the target if a new one is found
             if (newTarget != _currentTarget)
             {
+                if (_currentTarget != null)
+                {
+                    _currentTarget.ShowParticle(false);
+                }
                 _currentTarget = newTarget;
+                _currentTarget.ShowParticle(true);
                 OnTargetChanged(_currentTarget);
             }
 
