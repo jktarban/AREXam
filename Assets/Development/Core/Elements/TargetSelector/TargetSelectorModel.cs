@@ -28,7 +28,7 @@ namespace Development.Core.Elements.TargetSelector
 
             foreach (var enemy in enemies)
             {
-                Renderer enemyRenderer = enemy.GetComponent<Renderer>();
+                Renderer enemyRenderer = enemy.Renderer;
                 if (enemyRenderer == null || !enemyRenderer.isVisible)
                     continue;
 

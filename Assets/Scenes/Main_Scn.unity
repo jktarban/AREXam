@@ -234,9 +234,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model:
     configData:
-      enemy: {fileID: 5291483005754222327, guid: a645c213438b843b0a226fadab2e8567,
-        type: 3}
-      yOffset: 0.1
+      enemies:
+      - {fileID: 7477709190300486786, guid: 77463d5482a3f46b89d516151d9de8bb, type: 3}
+      - {fileID: 3102194515485545961, guid: 48511f5264d2742a4abbe87c07282e74, type: 3}
+      yOffset: 0
     settings: {fileID: 0}
   view:
     viewReferences:

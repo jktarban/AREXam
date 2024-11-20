@@ -8,10 +8,10 @@ namespace Development.Core.Elements.EnemySpawner
     [Serializable]
     public class EnemySpawnerModelConfigData : BaseModelConfigData
     {
-        public BaseEnemyComponent Enemy => enemy;
+        public BaseEnemyComponent[] Enemies => enemies;
         public float YOffset => yOffset;
 
-        [SerializeField] private BaseEnemyComponent enemy;
+        [SerializeField] private BaseEnemyComponent[] enemies;
         [SerializeField] private float yOffset;
     }
 }

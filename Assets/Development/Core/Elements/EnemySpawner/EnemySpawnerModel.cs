@@ -3,6 +3,7 @@ using Development.Public.Mvp;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace Development.Core.Elements.EnemySpawner
 {
@@ -26,7 +27,8 @@ namespace Development.Core.Elements.EnemySpawner
                 planeCenter.y += ConfigData.YOffset;
 
                 // Instantiate the object on the modified position
-                Object.Instantiate(ConfigData.Enemy, planeCenter, Quaternion.identity);
+                Object.Instantiate(ConfigData.Enemies[Random.Range(0, ConfigData.Enemies.Length)], planeCenter,
+                    Quaternion.identity);
                 break;
             }
         }

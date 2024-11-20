@@ -1,0 +1,5 @@
+/Users/pantoygames/AREXam/.utmp/RelWithDebInfo/1g48683h/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/pantoygames/AREXam/.utmp/RelWithDebInfo/1g48683h/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/pantoygames/AREXam/.utmp/RelWithDebInfo/1g48683h/armeabi-v7a/GameActivity/CMakeFiles/game.dir
+/Users/pantoygames/AREXam/.utmp/RelWithDebInfo/1g48683h/armeabi-v7a/GameActivity/CMakeFiles/edit_cache.dir
+/Users/pantoygames/AREXam/.utmp/RelWithDebInfo/1g48683h/armeabi-v7a/GameActivity/CMakeFiles/rebuild_cache.dir
