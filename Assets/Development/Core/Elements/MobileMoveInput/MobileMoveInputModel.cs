@@ -1,4 +1,5 @@
 using System;
+using Development.Core.Enums;
 using Development.Public.Mvp;
 using UnityEngine;
 
@@ -8,23 +9,21 @@ namespace Development.Core.Elements.MobileMoveInput
     public class MobileMoveInputModel : BaseModel<MobileMoveInputModelConfigData, MobileMoveInputModelSettings>
     {
         private Vector3 _lastPosition;
-        private Vector3 _lastVelocity;
-        private float _lastActionTime;
         private Camera _camera;
         private bool _movementTriggered;
+        private Action<TargetType> _onMoveDetected;
 
-        public void Init(Camera camera)
+        public void Init(Camera camera, Action<TargetType> onMoveDetected)
         {
             _camera = camera;
             _lastPosition = _camera.transform.position;
-            _lastActionTime = Time.time;
             _movementTriggered = false;
+            _onMoveDetected = onMoveDetected;
         }
 
         public void DetectMovement()
         {
-            if (_camera == null)
-                return;
+            if (_camera == null) return;
 
             // Calculate position delta
             Vector3 currentPosition = _camera.transform.position;
@@ -38,15 +37,11 @@ namespace Development.Core.Elements.MobileMoveInput
             Vector3 velocity = localDelta / deltaTime;
 
             // Check if velocity exceeds threshold for quick movement
-            if (!_movementTriggered && velocity.magnitude > ConfigData.VelocityThreshold)
+            if (!_movementTriggered && IsQuickMovement(velocity))
             {
-                string direction = GetMovementDirection(velocity);
-
-                if (!string.IsNullOrEmpty(direction))
+                if (EvaluateMovement(velocity))
                 {
-                    TriggerAction(direction);
                     _movementTriggered = true;
-                    _lastActionTime = Time.time;
                 }
             }
 
@@ -56,27 +51,52 @@ namespace Development.Core.Elements.MobileMoveInput
                 _movementTriggered = false;
             }
 
-            // Update last position and velocity
+            // Update last position
             _lastPosition = currentPosition;
-            _lastVelocity = velocity;
         }
 
-        private string GetMovementDirection(Vector3 velocity)
+        private bool IsQuickMovement(Vector3 velocity)
         {
-            // Determine dominant movement direction based on velocity
-            if (velocity.x > ConfigData.MovementThreshold) return "Right";
-            if (velocity.x < -ConfigData.MovementThreshold) return "Left";
-            if (velocity.y > ConfigData.MovementThreshold) return "Up";
-            if (velocity.y < -ConfigData.MovementThreshold) return "Down";
-            if (velocity.z > ConfigData.MovementThreshold) return "Forward";
-
-            return null;
+            return velocity.magnitude > ConfigData.VelocityThreshold;
         }
 
-        private void TriggerAction(string direction)
+        private bool EvaluateMovement(Vector3 velocity)
         {
-            Debug.Log($"Quick movement detected: {direction}");
-            // Add your custom logic for each direction here
+            if (CheckMovementDirection(velocity.x, ConfigData.MovementThreshold, TargetType.RightHip,
+                    TargetType.LeftHip))
+            {
+                return true;
+            }
+
+            if (CheckMovementDirection(velocity.y, ConfigData.MovementThreshold, TargetType.Head, TargetType.Feet))
+            {
+                return true;
+            }
+
+            if (CheckMovementDirection(velocity.z, ConfigData.MovementThreshold, TargetType.Heart))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool CheckMovementDirection(float axisValue, float threshold, TargetType positiveTarget,
+            TargetType? negativeTarget = null)
+        {
+            if (axisValue > threshold)
+            {
+                _onMoveDetected?.Invoke(positiveTarget);
+                return true;
+            }
+
+            if (negativeTarget.HasValue && axisValue < -threshold)
+            {
+                _onMoveDetected?.Invoke(negativeTarget.Value);
+                return true;
+            }
+
+            return false;
         }
     }
 }

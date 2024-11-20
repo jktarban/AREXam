@@ -410,10 +410,108 @@ MonoBehaviour:
     configData:
       movementThreshold: 0.5
       debounceTime: 0.5
+      velocityThreshold: 1.5
+      resetVelocityThreshold: 0.2
     settings: {fileID: 0}
   view:
     viewReferences:
       xrOrigin: {fileID: 744863974}
+  events:
+    onQuickMoveLeft:
+      eventItems:
+      - delay: 0
+        unityEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 891632266}
+              m_TargetAssemblyTypeName: Development.Core.Elements.Gun.GunPresenter,
+                Assembly-CSharp
+              m_MethodName: FireLeft
+              m_Mode: 0
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+    onQuickMoveRight:
+      eventItems:
+      - delay: 0
+        unityEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 891632266}
+              m_TargetAssemblyTypeName: Development.Core.Elements.Gun.GunPresenter,
+                Assembly-CSharp
+              m_MethodName: FireRight
+              m_Mode: 0
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+    onQuickMoveUp:
+      eventItems:
+      - delay: 0
+        unityEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 891632266}
+              m_TargetAssemblyTypeName: Development.Core.Elements.Gun.GunPresenter,
+                Assembly-CSharp
+              m_MethodName: FireUp
+              m_Mode: 0
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+    onQuickMoveDown:
+      eventItems:
+      - delay: 0
+        unityEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 891632266}
+              m_TargetAssemblyTypeName: Development.Core.Elements.Gun.GunPresenter,
+                Assembly-CSharp
+              m_MethodName: FireDown
+              m_Mode: 0
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+    onQuickMoveForward:
+      eventItems:
+      - delay: 0
+        unityEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 891632266}
+              m_TargetAssemblyTypeName: Development.Core.Elements.Gun.GunPresenter,
+                Assembly-CSharp
+              m_MethodName: FireForward
+              m_Mode: 0
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
 --- !u!1 &744863970
 GameObject:
   m_ObjectHideFlags: 0
