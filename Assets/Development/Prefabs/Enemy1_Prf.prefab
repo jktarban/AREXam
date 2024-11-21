@@ -387,7 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3709a4030ea51482b970636088e75871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRandomWeakpoint: 0
+  isRandomWeakpoint: 1
   weakPoint: 4
   leftHip: {fileID: 2713688881983610140}
   rightHip: {fileID: 8154918814830613488}
