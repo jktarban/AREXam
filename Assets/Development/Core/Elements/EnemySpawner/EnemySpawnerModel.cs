@@ -16,7 +16,7 @@ namespace Development.Core.Elements.EnemySpawner
         public void Init(ARPlaneManager planeManager, Action onKillEnemy)
         {
             _planeManager = planeManager;
-            planeManager.trackablesChanged.AddListener(OnPlanesChanged);
+            _planeManager.trackablesChanged.AddListener(OnPlanesChanged);
             _onKillEnemy = onKillEnemy;
         }
 
@@ -29,7 +29,8 @@ namespace Development.Core.Elements.EnemySpawner
                 planeCenter.y += ConfigData.YOffset;
 
                 // Instantiate the object on the modified position
-                var enemy = Object.Instantiate(ConfigData.Enemies[Random.Range(0, ConfigData.Enemies.Length)], planeCenter,
+                var enemy = Object.Instantiate(ConfigData.Enemies[Random.Range(0, ConfigData.Enemies.Length)],
+                    planeCenter,
                     Quaternion.identity);
                 enemy.OnKillEnemy(_onKillEnemy);
                 break;
@@ -40,6 +41,11 @@ namespace Development.Core.Elements.EnemySpawner
         {
             _planeManager.trackablesChanged.RemoveListener(OnPlanesChanged);
             _planeManager = null;
+        }
+
+        public void Stop()
+        {
+            _planeManager.trackablesChanged.RemoveAllListeners();
         }
     }
 }

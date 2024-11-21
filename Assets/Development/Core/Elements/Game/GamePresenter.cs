@@ -1,8 +1,11 @@
-
 using Cysharp.Threading.Tasks;
 using Development.Public.Managers;
 using Development.Public.Mvp;
 using Development.Public.Mvp.Messages;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.Management;
 
 namespace Development.Core.Elements.Game
 {
@@ -10,16 +13,58 @@ namespace Development.Core.Elements.Game
     {
         protected override async UniTask InitPresenter()
         {
+            StartARSession();
             AudioManager.Instance.PlayBgm(model.ConfigData.GameAudio).Forget();
+            view.OnRetryButtonClicked(OnRetryButtonClicked);
+            model.StartTimer(OnTimeUpdate, OnTimerEnd, CancellationToken).Forget();
             await UniTask.CompletedTask;
         }
+
+        private void OnRetryButtonClicked()
+        {
+            StopARSession();
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(currentSceneName);
+        }
+
+        private void StartARSession()
+        {
+            XRGeneralSettings instance = XRGeneralSettings.Instance;
+            if (instance != null)
+            {
+                StartCoroutine(instance.Manager.InitializeLoader());
+                instance.Manager.StartSubsystems();
+            }
+        }
+
+        private void StopARSession()
+        {
+            XRGeneralSettings instance = XRGeneralSettings.Instance;
+            if (instance != null)
+            {
+                instance.Manager.DeinitializeLoader();
+                instance.Manager.StopSubsystems();
+            }
+        }
+
 
         public void AddEnemyKill(BaseMessage message)
         {
             model.AddEnemyKill();
             view.UpdateEnemyKillCount(model.EnemyKillCount);
         }
-        
+
+        private void OnTimerEnd()
+        {
+            view.ShowTimeUp();
+            events?.OnGameOver.Invoke(new BaseMessage(), CancellationToken);
+        }
+
+        private void OnTimeUpdate(int time)
+        {
+            view.UpdateTimer(time);
+        }
+
 
         public override void Dispose()
         {

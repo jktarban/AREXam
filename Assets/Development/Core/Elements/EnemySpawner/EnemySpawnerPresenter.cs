@@ -12,6 +12,11 @@ namespace Development.Core.Elements.EnemySpawner
             await UniTask.CompletedTask;
         }
 
+        public void Stop(BaseMessage message)
+        {
+            model.Stop();
+        }
+
         private void OnKillEnemy()
         {
             events.OnKillEnemy?.Invoke(new BaseMessage(), CancellationToken);

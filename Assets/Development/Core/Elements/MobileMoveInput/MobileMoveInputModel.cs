@@ -12,6 +12,7 @@ namespace Development.Core.Elements.MobileMoveInput
         private Camera _camera;
         private bool _movementTriggered;
         private Action<TargetType> _onMoveDetected;
+        private bool _isStopped;
 
         public void Init(Camera camera, Action<TargetType> onMoveDetected)
         {
@@ -23,6 +24,11 @@ namespace Development.Core.Elements.MobileMoveInput
 
         public void DetectMovement()
         {
+            if (_isStopped)
+            {
+                return;
+            }
+            
             if (_camera == null) return;
 
             // Calculate position delta
@@ -87,6 +93,11 @@ namespace Development.Core.Elements.MobileMoveInput
             }
 
             return null; // No significant movement
+        }
+
+        public void Stop()
+        {
+            _isStopped = true;
         }
     }
 }

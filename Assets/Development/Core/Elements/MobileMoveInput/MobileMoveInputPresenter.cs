@@ -14,6 +14,11 @@ namespace Development.Core.Elements.MobileMoveInput
             await UniTask.CompletedTask;
         }
 
+        public void Stop(BaseMessage message)
+        {
+            model.Stop();
+        }
+
         private void OnMoveDetected(TargetType targetType)
         {
             var inputText = "Input: ";

@@ -34,24 +34,39 @@ namespace Development.Public.Managers
             }
         }
 
+        private void Awake()
+        {
+            if (_instance == null)
+            {
+                _instance = this;
+                DontDestroyOnLoad(gameObject); // Persist this instance across scenes
+            }
+            else if (_instance != this)
+            {
+                Destroy(gameObject); // Destroy any duplicate instance
+                return;
+            }
 
-        private void Start()
+            InitializeAudioSources();
+        }
+
+        private void InitializeAudioSources()
         {
             var audioSources = GetComponents<AudioSource>();
 
             foreach (var audioSource in audioSources)
             {
-                Destroy(audioSource);
+                Destroy(audioSource); // Clear existing AudioSources if any
             }
 
-            _bgmAudioSource = transform.gameObject.AddComponent<AudioSource>();
+            _bgmAudioSource = gameObject.AddComponent<AudioSource>();
             _bgmAudioSource.outputAudioMixerGroup = bgmAudioMixer;
             _bgmAudioSource.loop = true;
         }
 
         public async UniTaskVoid PlaySfx(AudioData audioData, CancellationToken cancellationToken)
         {
-            var sfxAudioSource = transform.gameObject.AddComponent<AudioSource>();
+            var sfxAudioSource = gameObject.AddComponent<AudioSource>();
             sfxAudioSource.clip = audioData.AudioClip;
             sfxAudioSource.volume = audioData.Volume;
             sfxAudioSource.outputAudioMixerGroup = sfxAudioMixer;
