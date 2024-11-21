@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Development.Public.Mvp;
+using Development.Public.Mvp.Messages;
 
 namespace Development.Core.Elements.EnemySpawner
 {
@@ -7,8 +8,13 @@ namespace Development.Core.Elements.EnemySpawner
     {
         protected override async UniTask InitPresenter()
         {
-            model.Init(view.PlaneManager);
+            model.Init(view.PlaneManager, OnKillEnemy);
             await UniTask.CompletedTask;
+        }
+
+        private void OnKillEnemy()
+        {
+            events.OnKillEnemy?.Invoke(new BaseMessage(), CancellationToken);
         }
 
         public override void Dispose()

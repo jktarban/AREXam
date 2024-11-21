@@ -11,11 +11,13 @@ namespace Development.Core.Elements.EnemySpawner
     public class EnemySpawnerModel : BaseModel<EnemySpawnerModelConfigData, EnemySpawnerModelSettings>
     {
         private ARPlaneManager _planeManager;
+        private Action _onKillEnemy;
 
-        public void Init(ARPlaneManager planeManager)
+        public void Init(ARPlaneManager planeManager, Action onKillEnemy)
         {
             _planeManager = planeManager;
             planeManager.trackablesChanged.AddListener(OnPlanesChanged);
+            _onKillEnemy = onKillEnemy;
         }
 
         private void OnPlanesChanged(ARTrackablesChangedEventArgs<ARPlane> args)
@@ -27,8 +29,9 @@ namespace Development.Core.Elements.EnemySpawner
                 planeCenter.y += ConfigData.YOffset;
 
                 // Instantiate the object on the modified position
-                Object.Instantiate(ConfigData.Enemies[Random.Range(0, ConfigData.Enemies.Length)], planeCenter,
+                var enemy = Object.Instantiate(ConfigData.Enemies[Random.Range(0, ConfigData.Enemies.Length)], planeCenter,
                     Quaternion.identity);
+                enemy.OnKillEnemy(_onKillEnemy);
                 break;
             }
         }

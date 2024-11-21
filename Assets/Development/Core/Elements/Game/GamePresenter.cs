@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using Development.Public.Managers;
 using Development.Public.Mvp;
+using Development.Public.Mvp.Messages;
 
 namespace Development.Core.Elements.Game
 {
@@ -12,7 +13,12 @@ namespace Development.Core.Elements.Game
             AudioManager.Instance.PlayBgm(model.ConfigData.GameAudio).Forget();
             await UniTask.CompletedTask;
         }
-        
+
+        public void AddEnemyKill(BaseMessage message)
+        {
+            model.AddEnemyKill();
+            view.UpdateEnemyKillCount(model.EnemyKillCount);
+        }
         
 
         public override void Dispose()

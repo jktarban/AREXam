@@ -13,6 +13,7 @@ namespace Development.Core.Components.Enemy
         public Transform Feet => feet;
         public Transform Heart => heart;
         public Renderer Renderer => renderer;
+      
 
         [SerializeField] private bool isRandomWeakpoint;
         [SerializeField] private TargetType weakPoint;
@@ -25,7 +26,7 @@ namespace Development.Core.Components.Enemy
         [SerializeField] private Renderer renderer;
         [SerializeField] private GameObject destroyEffect;
         private TargetType _weakPoint;
-
+        private event Action _onKillEnemy;
 
         private void Start()
         {
@@ -43,6 +44,11 @@ namespace Development.Core.Components.Enemy
             }
         }
 
+        public void OnKillEnemy(Action onKillEnemy)
+        {
+            _onKillEnemy += onKillEnemy;
+        }
+
         public void ShowParticle(bool isShow)
         {
             particleSystem.gameObject.SetActive(isShow);
@@ -52,7 +58,9 @@ namespace Development.Core.Components.Enemy
         {
             if (targetType == _weakPoint)
             {
+                _onKillEnemy?.Invoke();
                 Instantiate(destroyEffect, transform.position, Quaternion.identity);
+                _onKillEnemy = null;
                 Destroy(gameObject);
             }
         }
