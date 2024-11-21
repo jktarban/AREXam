@@ -39,8 +39,11 @@ namespace Development.Core.Elements.MobileMoveInput
             // Check if velocity exceeds threshold for quick movement
             if (!_movementTriggered && IsQuickMovement(velocity))
             {
-                if (EvaluateMovement(velocity))
+                TargetType? detectedMovement = GetDominantMovement(velocity);
+
+                if (detectedMovement.HasValue)
                 {
+                    _onMoveDetected?.Invoke(detectedMovement.Value);
                     _movementTriggered = true;
                 }
             }
@@ -60,43 +63,30 @@ namespace Development.Core.Elements.MobileMoveInput
             return velocity.magnitude > ConfigData.VelocityThreshold;
         }
 
-        private bool EvaluateMovement(Vector3 velocity)
+        private TargetType? GetDominantMovement(Vector3 velocity)
         {
-            if (CheckMovementDirection(velocity.x, ConfigData.MovementThreshold, TargetType.RightHip,
-                    TargetType.LeftHip))
+            // Calculate absolute values to find dominant axis
+            float absX = Mathf.Abs(velocity.x);
+            float absY = Mathf.Abs(velocity.y);
+            float absZ = Mathf.Abs(velocity.z);
+
+            // Compare magnitudes to determine the dominant movement direction
+            if (absX > absY && absX > absZ && absX > ConfigData.MovementThreshold)
             {
-                return true;
+                return velocity.x > 0 ? TargetType.RightHip : TargetType.LeftHip;
             }
 
-            if (CheckMovementDirection(velocity.y, ConfigData.MovementThreshold, TargetType.Head, TargetType.Feet))
+            if (absY > absX && absY > absZ && absY > ConfigData.MovementThreshold)
             {
-                return true;
+                return velocity.y > 0 ? TargetType.Head : TargetType.Feet;
             }
 
-            if (CheckMovementDirection(velocity.z, ConfigData.MovementThreshold, TargetType.Heart))
+            if (absZ > absX && absZ > absY && absZ > ConfigData.MovementThreshold)
             {
-                return true;
+                return velocity.z > 0 ? TargetType.Heart : null; // Only forward for Z axis
             }
 
-            return false;
-        }
-
-        private bool CheckMovementDirection(float axisValue, float threshold, TargetType positiveTarget,
-            TargetType? negativeTarget = null)
-        {
-            if (axisValue > threshold)
-            {
-                _onMoveDetected?.Invoke(positiveTarget);
-                return true;
-            }
-
-            if (negativeTarget.HasValue && axisValue < -threshold)
-            {
-                _onMoveDetected?.Invoke(negativeTarget.Value);
-                return true;
-            }
-
-            return false;
+            return null; // No significant movement
         }
     }
 }
