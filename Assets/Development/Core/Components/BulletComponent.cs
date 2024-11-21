@@ -7,12 +7,13 @@ namespace Development.Core.Components
 {
     public class BulletComponent : MonoBehaviour
     {
+        [SerializeField] private GameObject destroyEffect;
         private TargetType _targetType;
 
         private IEnumerator Start()
         {
-            yield return new WaitForSeconds(10f);
-            Destroy(gameObject);
+            yield return new WaitForSeconds(2f);
+            DestroyBullet();
         }
 
         public void SetTargetType(TargetType targetType)
@@ -26,8 +27,8 @@ namespace Development.Core.Components
             {
                 collision.gameObject.GetComponent<ITarget>().Hit(_targetType);
             }
-            
-            Destroy(gameObject);
+
+            DestroyBullet();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -36,7 +37,13 @@ namespace Development.Core.Components
             {
                 other.GetComponent<ITarget>().Hit(_targetType);
             }
-            
+
+            DestroyBullet();
+        }
+
+        private void DestroyBullet()
+        {
+            Instantiate(destroyEffect, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

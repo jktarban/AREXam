@@ -23,6 +23,7 @@ namespace Development.Core.Components.Enemy
         [SerializeField] private Transform heart;
         [SerializeField] private ParticleSystem particleSystem;
         [SerializeField] private Renderer renderer;
+        [SerializeField] private GameObject destroyEffect;
         private TargetType _weakPoint;
 
 
@@ -51,6 +52,7 @@ namespace Development.Core.Components.Enemy
         {
             if (targetType == _weakPoint)
             {
+                Instantiate(destroyEffect, transform.position, Quaternion.identity);
                 Destroy(gameObject);
             }
         }

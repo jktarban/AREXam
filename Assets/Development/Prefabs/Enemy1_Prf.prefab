@@ -387,6 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3709a4030ea51482b970636088e75871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomWeakpoint: 0
   weakPoint: 4
   leftHip: {fileID: 2713688881983610140}
   rightHip: {fileID: 8154918814830613488}
@@ -395,6 +396,8 @@ MonoBehaviour:
   heart: {fileID: 3859670981314210715}
   particleSystem: {fileID: 8918457409847302923}
   renderer: {fileID: 5670911194438930447}
+  destroyEffect: {fileID: 1612194378161370, guid: 197ca6c6ee803482b9906957e3b1a7ed,
+    type: 3}
 --- !u!1 &5057338374704550733
 GameObject:
   m_ObjectHideFlags: 0
