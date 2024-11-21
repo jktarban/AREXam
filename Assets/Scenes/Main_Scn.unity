@@ -1040,7 +1040,7 @@ MonoBehaviour:
       gameAudio:
         AudioClip: {fileID: 8300000, guid: 4a34ffb7cca654c81b1afdead62e5512, type: 3}
         Volume: 0.3
-      gameTime: 5
+      gameTime: 60
     settings: {fileID: 0}
   view:
     viewReferences:
