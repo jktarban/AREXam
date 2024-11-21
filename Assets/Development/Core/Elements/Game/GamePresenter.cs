@@ -2,9 +2,7 @@ using Cysharp.Threading.Tasks;
 using Development.Public.Managers;
 using Development.Public.Mvp;
 using Development.Public.Mvp.Messages;
-using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.Management;
 
 namespace Development.Core.Elements.Game
@@ -13,7 +11,7 @@ namespace Development.Core.Elements.Game
     {
         protected override async UniTask InitPresenter()
         {
-            StartARSession();
+            StartARSession().Forget();
             AudioManager.Instance.PlayBgm(model.ConfigData.GameAudio).Forget();
             view.OnRetryButtonClicked(OnRetryButtonClicked);
             model.StartTimer(OnTimeUpdate, OnTimerEnd, CancellationToken).Forget();
@@ -27,26 +25,17 @@ namespace Development.Core.Elements.Game
             SceneManager.LoadScene(currentSceneName);
         }
 
-        private void StartARSession()
+        private async UniTaskVoid StartARSession()
         {
-            XRGeneralSettings instance = XRGeneralSettings.Instance;
-            if (instance != null)
-            {
-                StartCoroutine(instance.Manager.InitializeLoader());
-                instance.Manager.StartSubsystems();
-            }
+            await XRGeneralSettings.Instance.Manager.InitializeLoader();
+            XRGeneralSettings.Instance.Manager.StartSubsystems();
         }
 
         private void StopARSession()
         {
-            XRGeneralSettings instance = XRGeneralSettings.Instance;
-            if (instance != null)
-            {
-                instance.Manager.DeinitializeLoader();
-                instance.Manager.StopSubsystems();
-            }
+            XRGeneralSettings.Instance.Manager.StopSubsystems();
+            XRGeneralSettings.Instance.Manager.DeinitializeLoader();
         }
-
 
         public void AddEnemyKill(BaseMessage message)
         {

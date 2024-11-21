@@ -16,10 +16,12 @@ namespace Development.Core.Elements.Gun
     {
         private Camera _mainCamera;
         private ITarget _target;
+        private CancellationToken _cancellationToken;
 
-        public void Init(Camera mainCamera)
+        public void Init(Camera mainCamera, CancellationToken cancellationToken)
         {
             _mainCamera = mainCamera;
+            _cancellationToken = cancellationToken;
         }
 
         public void SetTarget(ITarget target)
@@ -27,7 +29,7 @@ namespace Development.Core.Elements.Gun
             _target = target;
         }
 
-        public void Fire(TargetType targetType, CancellationToken cancellationToken)
+        public void Fire(TargetType targetType)
         {
             if (_target == null)
             {
@@ -35,7 +37,7 @@ namespace Development.Core.Elements.Gun
                 return;
             }
 
-            AudioManager.Instance.PlaySfx(ConfigData.FireAudio, cancellationToken).Forget();
+
             switch (targetType)
             {
                 case TargetType.LeftHip:
@@ -70,7 +72,7 @@ namespace Development.Core.Elements.Gun
             bullet.SetTargetType(targetType);
 
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
-
+            AudioManager.Instance.PlaySfx(ConfigData.FireAudio, _cancellationToken).Forget();
             // Start homing logic
             TrackTarget(target, bullet, rb).Forget();
         }

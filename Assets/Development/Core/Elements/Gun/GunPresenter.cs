@@ -9,7 +9,7 @@ namespace Development.Core.Elements.Gun
     {
         protected override async UniTask InitPresenter()
         {
-            model.Init(view.MainCamera);
+            model.Init(view.MainCamera, CancellationToken);
             await UniTask.CompletedTask;
         }
 
@@ -20,27 +20,27 @@ namespace Development.Core.Elements.Gun
 
         public void FireLeft(BaseMessage message)
         {
-            model.Fire(TargetType.LeftHip, CancellationToken);
+            model.Fire(TargetType.LeftHip);
         }
 
         public void FireRight(BaseMessage message)
         {
-            model.Fire(TargetType.RightHip, CancellationToken);
+            model.Fire(TargetType.RightHip);
         }
 
         public void FireUp(BaseMessage message)
         {
-            model.Fire(TargetType.Head, CancellationToken);
+            model.Fire(TargetType.Head);
         }
 
         public void FireDown(BaseMessage message)
         {
-            model.Fire(TargetType.Feet, CancellationToken);
+            model.Fire(TargetType.Feet);
         }
 
         public void FireForward(BaseMessage message)
         {
-            model.Fire(TargetType.Heart, CancellationToken);
+            model.Fire(TargetType.Heart);
         }
 
         public override void Dispose()
