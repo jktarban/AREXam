@@ -20,29 +20,29 @@ namespace Development.Core.Elements.Gun
 
         public void FireLeft(BaseMessage message)
         {
-            model.Fire(TargetType.LeftHip);
+            model.Fire(TargetType.LeftHip, CancellationToken);
         }
 
         public void FireRight(BaseMessage message)
         {
-            model.Fire(TargetType.RightHip);
+            model.Fire(TargetType.RightHip, CancellationToken);
         }
 
         public void FireUp(BaseMessage message)
         {
-            model.Fire(TargetType.Head);
+            model.Fire(TargetType.Head, CancellationToken);
         }
 
         public void FireDown(BaseMessage message)
         {
-            model.Fire(TargetType.Feet);
+            model.Fire(TargetType.Feet, CancellationToken);
         }
 
         public void FireForward(BaseMessage message)
         {
-            model.Fire(TargetType.Heart);
+            model.Fire(TargetType.Heart, CancellationToken);
         }
-        
+
         public override void Dispose()
         {
         }

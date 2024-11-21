@@ -1,8 +1,10 @@
 using System;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Development.Core.Components;
 using Development.Core.Enums;
 using Development.Core.Interfaces;
+using Development.Public.Managers;
 using Development.Public.Mvp;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -25,7 +27,7 @@ namespace Development.Core.Elements.Gun
             _target = target;
         }
 
-        public void Fire(TargetType targetType)
+        public void Fire(TargetType targetType, CancellationToken cancellationToken)
         {
             if (_target == null)
             {
@@ -33,6 +35,7 @@ namespace Development.Core.Elements.Gun
                 return;
             }
 
+            AudioManager.Instance.PlaySfx(ConfigData.FireAudio, cancellationToken).Forget();
             switch (targetType)
             {
                 case TargetType.LeftHip:
